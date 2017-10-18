@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="card card-container">
+<%= form_with scope: :user, url: signup_index_path, local: true do |f|%>
+<form class="form-signin">
+		<div class="form-group"
+			<label for="">Name</label>
+			<%= f.text_field :name, class: "form-control" %>
+		</div>
+		<div class="form-group">
+			<label for="">
+				Email
+			</label>
+			<%= f.text_field :email, class: "form-control" %>
+		</div>
+		<div class="form-group">
+			<label for="">Password</label>
+			<%= f.password_field :password, class: "form-control" %>
+		</div>
+		<button type="submit" class="btn btn-primary">Register</button>
+  </form>
+<% end %>
+  </div>
+</div>
