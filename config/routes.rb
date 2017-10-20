@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get '/', to: "sessions#new", as: :login
   post '/', to: "sessions#create", as: nil
-
+  delete '/logout', to: 'sessions#destroy', as: :logout
 
   resources :mail, only: [:index]
 

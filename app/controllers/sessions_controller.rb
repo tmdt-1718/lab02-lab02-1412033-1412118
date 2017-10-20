@@ -9,14 +9,17 @@ class SessionsController < ApplicationController
       session[:error] = "Wrong email or password."
       render :new
     else
+      session[:current_user] = user
       session[:success] = "Login successfully."
       redirect_to mail_index_path
     end
   end
+
   def destroy
-    logout
+    session.delete(:current_user)
     redirect_to login_path
   end
+
   private
   def session_params
     params.require(:session).permit(:email, :password)
