@@ -1,0 +1,2 @@
+class Receivemail < ApplicationRecord
+end
