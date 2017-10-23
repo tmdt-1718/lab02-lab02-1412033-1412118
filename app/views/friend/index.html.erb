@@ -14,6 +14,7 @@
           <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="#" class="nav-link">About</a></li>
 
+
           <% if session[:current_user] %>
           <li class="nav-item">
             <a class="nav-link">
@@ -32,6 +33,7 @@
 
         </ul>
       </div>
+
 </nav>
 
 <div class="container">
@@ -40,10 +42,26 @@
       <a href="/mail/compose" class="nav-link" style="color: white">Compose</a>
       <a href="/mail/received" class="nav-link" style="color: white">Inbox</a>
       <a href="/friends" class="nav-link" style="color: white">Friends</a>
+      <a href="/request" class="nav-link" style="color: white">Friend Requests</a>
       <a href="/mail/sent" class="nav-link" style="color: white">Sent Mail</a>
     </div>
 
     <div class="col-9">
+
+
+        <form class="form-inline my-2 my-lg-0">
+          <%= form_with scope: :user, url: request_path, local: true do |f|%>
+
+          <%= f.text_field :email , :placeholder=>"Email", class: "form-control" %>
+
+              <button id="request" type="submit" class="btn">Add a friend</button>
+              <% if flash[:error] %>
+                <p><span style="color: red"><%= flash[:error] %></span></p>
+              <%else%>
+                <p><span><span style="color: green;"><%= flash[:success] %></span></p>
+              <%end%>
+          <% end %>
+        </form>
 
       <table class="table">
         <thead>
