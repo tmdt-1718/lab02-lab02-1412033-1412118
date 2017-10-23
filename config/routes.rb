@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/mail/sent/:id', to: "mail#detailsent", as: :detailsent
   resources :mail, only: [:index, :new, :create, :show]
 
+  get '/friends', to: "friend#index", as: :friendlist
+
 end
