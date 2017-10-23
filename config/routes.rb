@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   post '/', to: "sessions#create", as: nil
   delete '/logout', to: 'sessions#destroy', as: :logout
 
-  resources :mail, only: [:index]
+  get '/mail/received', to: "mail#receive", as: :receive
+  get '/mail/received/:id', to: "mail#detailreceive", as: :detailreceive
+  get '/mail/sent', to: "mail#sent", as: :sent
+  get '/mail/sent/:id', to: "mail#detailsent", as: :detailsent
+  resources :mail, only: [:index, :new, :create, :show]
 
 end

@@ -45,7 +45,30 @@
 
     <div class="col-9">
 
+      <div class="col-md-12">
+      	<div class="row mt-3" id="sender">
+          <p>From: </p><strong>&nbsp;<%=@message.sendmail.user.name%></strong>&nbsp;&nbsp;(<%=@message.sendmail.user.email%>)
+        </div>
+        <div class="row" id="receiver">
+      		<p>To: </p><strong>&nbsp;<%=@message.receivemail.user.name%></strong>&nbsp;&nbsp;(<%=@message.receivemail.user.email%>)
+      	</div>
+        <div class="row" id="senddate">
+          <p>Sent time: </p><i>&nbsp;<%=@message.receivemail.created_at%></i>
+        </div>
+      	<div class="row" id="senddate">
+          <th>
+          <% if @message.receivemail.updated_at == @message.receivemail.created_at%>
+            <p>Seen time: </p><i>&nbsp; Unread</i>
+          <%else%>
+      		<p>Seen time: </p><i>&nbsp;<%=@message.receivemail.updated_at%></i>
+          <%end%>
+        </th>
+      	</div>
+      	<div class="row" id="body">
 
+      		<p>Content:<i>&nbsp;<%=@message.body%></i></p>
+      	</div>
+      </div>
 
     </div>
   </div>

@@ -46,6 +46,29 @@
     <div class="col-9">
 
 
+        <table class="table">
+          <thead>
+            <tr>
+
+              <th>To</th>
+              <th>Content</th>
+              <th>Send Time</th>
+              <th>Seen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @smss.each do |sm| %>
+
+                <tr onclick="location.href='<%= detailsent_path(sm) %>'" id="read">
+                  <td><%= sm.receiver %></td>
+                  <td><%= sm.body %></td>
+                  <td><%= sm.created_at %></td>
+                  <td><%= sm.seen %></td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+
 
     </div>
   </div>

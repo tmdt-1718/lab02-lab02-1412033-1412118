@@ -1,3 +1,4 @@
 class User < ApplicationRecord
-  has_many :messages
+  has_many :sendmail
+  has_many :receivemail
 end

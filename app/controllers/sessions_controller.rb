@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     else
       session[:current_user] = user
       session[:success] = "Login successfully."
-      redirect_to mail_index_path
+      redirect_to receive_path
     end
   end
 
