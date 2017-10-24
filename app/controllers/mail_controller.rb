@@ -2,16 +2,26 @@ class MailController < ApplicationController
  before_action :authenticate
 
   def new
-    @sendmail = Sendmail.new
+
   end
 
   def create
-    @sendmail = Sendmail.new(sendmail_params)
-    @sendmail.user_id = current_user.id
-    if @sendmail.save
-      redirect_to "/sendmails/#{@sendmail.id}"
-    else
-      render :new
+    begin
+			if(params[:chosen_id].to_s == "")
+				flash[:notice] = "Cannot send message!"
+			else
+
+				@sm = Message.create(body: params[:body])
+				Sendmail.create(user_id: session[:current_user]["id"] , message_id: @sm.id)
+				Receivemail.create(user_id: params[:chosen_id], message_id: @sm.id, seen: false)
+				flash[:notice] = "Message is sent!"
+				redirect_to sent_path
+			end
+
+
+		 rescue ActiveRecord::RecordInvalid => e
+			flash[:error] = "Cannot send message"
+			redirect_to new_mail_path
     end
   end
 
@@ -50,7 +60,7 @@ class MailController < ApplicationController
 		@sms = User.find(session[:current_user]["id"]).sendmail
 		@sms.each do |sm|
 			id =  sm.message_id
-			messsage = Message.find(id)
+			mes = Message.find(id)
 
 			class << sm
 		 		 attr_accessor :body
@@ -58,12 +68,12 @@ class MailController < ApplicationController
 		 		  attr_accessor :seen
 			end
 
-			sm.body = messsage.body.from(0).to(30)+"..."
-			sm.receiver = messsage.receivemail.user.name
-			if(messsage.receivemail.updated_at.to_datetime == messsage.receivemail.created_at.to_datetime )
+			sm.body = mes.body.from(0).to(30)+"..."
+			sm.receiver = mes.receivemail.user.name
+			if(mes.receivemail.updated_at.to_datetime == mes.receivemail.created_at.to_datetime )
 				sm.seen = "Unread"
 			else
-				sm.seen = messsage.receivemail.updated_at
+				sm.seen = mes.receivemail.updated_at
 			end
 		end
 		@smss = @sms.sort{ |b,a| a.created_at <=> b.created_at }
@@ -80,6 +90,6 @@ class MailController < ApplicationController
 
   private
   def message_params
-    params.require(:message).permit(:user_id, :body)
+	  	params.require(:message).permit(:chosen_id, :body)
   end
 end

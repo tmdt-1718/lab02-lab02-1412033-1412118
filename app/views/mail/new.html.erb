@@ -45,28 +45,36 @@
     </div>
 
     <div class="col-9">
-      <table class="table">
-        <thead>
-          <tr>
-
-            <th>Name</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-              <tr>
-                <td><%= user.user.name%></td>
-                <td><%= user.user.email %></td>
-                <td><button class="btn btn-success" onclick="location.href='<%= accept_path(user.user.id) %>'">Accept</button></td>
-              </tr>
-
-          <% end %>
-        </tbody>
-      </table>
-
-
+      <p><%= flash[:notice] %></p>
+      <%= form_with model: @Message, local: true, :id=>"content" do |f|%>
+      <div class="form-group">
+        <label>To:</label>
+        <%=select("", "chosen_id", User.find(session[:current_user]["id"]).users.collect {|r| [ r.email << ' (' << r.name << ') ', r.id ] },
+        {prompt: 'Choose a friend' },  {:class=>"form-control",:id=>"friend"}) %>
+      </div>
+      <div class="form-group" style="height: 300px">
+        <label>Message</label>
+        <%= f.text_area :body, :id=>"area", :placeholder=>"Enter message....", :style=>"height:80%", class: "form-control" %>
+      </div>
+      <button type="submit" class="btn btn-primary">Send</button>
+      <% end %>
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+ $("#content").submit(function(){
+  if($('#friend :selected').val()=="")
+  {
+    alert("Choose a friend!");
+    return false;
+  }
+  if($('#area').val()=="")
+  {
+    alert("Not empty!");
+    return false;
+  }
+  return true;
+ });
+</script>

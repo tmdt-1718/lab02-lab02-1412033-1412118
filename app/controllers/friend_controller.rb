@@ -41,28 +41,35 @@ class FriendController < ApplicationController
 
   end
 
-  def getrequest
+  def sendrequest
     begin
-      @user = User.find_by(email: request_param[:email])
-      if(@user.present?)
-        @valid = Confirm.find_by(receiver: @user.id, user_id: session[:current_user]["id"])
-        if (@valid.present?)
-
-        else
-          @u = @user.users.find_by(id: session[:current_user]["id"])
-           if(@u.present?)
-
+         @user = User.find_by email: params[:email]
+         if(@user.present?)
+           @valid = Confirm.find_by user_2_id: @user.id, user_1_id: session[:current_user_id]
+           if @valid.present?
+             logger.debug "Da co trong danh sach yeu cau"
+             flash[:error] = "Da co trong danh sach yeu cau"
            else
+             @u = @user.users.find_by(id: session[:current_user_id])
 
-             relate = Confirm.create!(receiver: @user.id, user_id: session[:current_user_id])
+             if(@u.present?)
+                 flash[:error] = "Da co trong danh sach ban be"
+
+             else
+
+               relate = Confirm.create!(user_2_id: @user.id, user_1_id: session[:current_user_id])
+               flash[:success] = "Send request successfully."
+             end
+
            end
-        end
-      else
-    end
-  rescue ActiveRecord::RecordInvalid => e
+         else
+           flash[:error] = "Khong co nguoi nay"
+         end
+       rescue ActiveRecord::RecordInvalid => e
+         flash[:error] = "Cannot register new account."
 
-  end
-  redirect_to request.referrer
+       end
+   redirect_to request.referrer
 end
 
   private

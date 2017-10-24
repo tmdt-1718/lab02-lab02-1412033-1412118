@@ -51,14 +51,12 @@
 
         <form class="form-inline my-2 my-lg-0">
           <%= form_with scope: :user, url: request_path, local: true do |f|%>
-
           <%= f.text_field :email , :placeholder=>"Email", class: "form-control" %>
-
-              <button id="request" type="submit" class="btn">Add a friend</button>
+              <button id="request" type="submit" class="btn">Add friend</button>
               <% if flash[:error] %>
                 <p><span style="color: red"><%= flash[:error] %></span></p>
               <%else%>
-                <p><span><span style="color: green;"><%= flash[:success] %></span></p>
+                <p><span><span style="color: green"><%= flash[:success] %></span></p>
               <%end%>
           <% end %>
         </form>
