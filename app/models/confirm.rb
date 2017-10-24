@@ -1,3 +1,3 @@
 class Confirm < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, :class_name => "User", :foreign_key => "user_1_id" and "user_2_id"
 end

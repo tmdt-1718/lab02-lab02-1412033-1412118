@@ -46,6 +46,26 @@
 
     <div class="col-9">
 
+      <table class="table">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+              <tr>
+                <td><%= user.user.name%></td>
+                <td><%= user.user.email %></td>
+                <td><button class="btn btn-success" onclick="location.href='<%= accept_path(user.user.id) %>'">Accept</button></td>
+              </tr>
+
+          <% end %>
+        </tbody>
+      </table>
 
 
     </div>

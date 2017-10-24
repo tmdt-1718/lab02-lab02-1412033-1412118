@@ -12,8 +12,8 @@ class FriendController < ApplicationController
 
   end
   def listrequest
-    @cofirm = Confirm.where("user_2_id = ?", session[:current_user]["id"])
-    @user = User.find(cofirm.user_id)
+    @users = Confirm.where("user_2_id = ?", session[:current_user]["id"])
+
   end
 
   def getrequest

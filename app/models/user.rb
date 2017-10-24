@@ -7,8 +7,5 @@ class User < ApplicationRecord
     :foreign_key => "user_1_id",
     :association_foreign_key => "user_2_id")
 
-    has_and_belongs_to_many(:users,
-      :join_table => "confirms",
-      :foreign_key => "user_1_id",
-      :association_foreign_key => "user_2_id")
+
 end
