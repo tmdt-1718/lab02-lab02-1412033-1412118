@@ -74,9 +74,11 @@
           <% @friend.each do |user| %>
 
               <tr>
-                <td><strong><%= user.name%></strong></td>
+                <td><i><%= user.name%></i></td>
 
-                <td><strong><%= user.email %></strong></td>
+                <td><i><%= user.email %></i></td>
+                <td><button class="btn btn-success" onclick="location.href='<%= unfriend_path(user.id) %>'">Unfriend</button></td>
+
               </tr>
 
           <% end %>

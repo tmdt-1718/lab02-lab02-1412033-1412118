@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/request', to: "friend#listrequest", as: :listrequest
   get '/request/:id', to: "friend#accept", as: :accept
   get '/friends', to: "friend#index", as: :friendlist
+  get '/friends/delete/:id', to: "friend#delete", as: :unfriend
   resources :friend, only: [:index, :new, :show]
 
 end
