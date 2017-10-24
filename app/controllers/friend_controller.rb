@@ -12,7 +12,24 @@ class FriendController < ApplicationController
 
   end
   def listrequest
-    @users = Confirm.where("user_2_id = ?", session[:current_user]["id"])
+    @users = Confirm.where(user_2_id: session[:current_user]["id"])
+
+  end
+
+  def accept
+
+    @req = Confirm.find_by(user_2_id: session[:current_user]["id"], user_1_id: params[:id])
+    if (@req.present?)
+      num1 = User.find(params[:id])
+      num2 = User.find(session[:current_user]["id"])
+
+      num1.users.push(num2)
+      num2.users.push(num1)
+      @req.destroy
+      redirect_to listrequest_path
+    else
+
+    end
 
   end
 
@@ -20,27 +37,27 @@ class FriendController < ApplicationController
     begin
       @user = User.find_by(email: request_param[:email])
       if(@user.present?)
-        @valid = Confirm.find_by(receiver: @user.id, user_id: session[:current_user_id])
+        @valid = Confirm.find_by(receiver: @user.id, user_id: session[:current_user]["id"])
         if (@valid.present?)
-          logger.debug "Da co trong danh sach yeu cau"
-          flash[:error] = "Da co trong danh sach yeu cau"
+
+
         else
-          @u = @user.users.find_by(id: session[:current_user_id])
+          @u = @user.users.find_by(id: session[:current_user]["id"])
 
            if(@u.present?)
-               flash[:error] = "Da co trong danh sach ban be"
+
 
            else
 
              relate = Confirm.create!(receiver: @user.id, user_id: session[:current_user_id])
-             flash[:success] = "Send request successfully."
+
            end
         end
       else
-        flash[:error] = "Khong co nguoi nay"
+
     end
   rescue ActiveRecord::RecordInvalid => e
-    flash[:error] = "Cannot register new account."
+
   end
   redirect_to request.referrer
 end
