@@ -43,34 +43,34 @@ class FriendController < ApplicationController
 
   def sendrequest
     begin
-         @user = User.find_by email: params[:email]
-         if(@user.present?)
-           @valid = Confirm.find_by user_2_id: @user.id, user_1_id: session[:current_user_id]
-           if @valid.present?
-             logger.debug "Da co trong danh sach yeu cau"
-             flash[:error] = "Da co trong danh sach yeu cau"
-           else
-             @u = @user.users.find_by(id: session[:current_user_id])
+      @user = User.find_by(email: request_param[:email])
+      if(@user.present?)
+        if (@user.id == session[:current_user]["id"])
+          flash[:error] = "Cannot send request to yourself"
+        else
+        @valid = Confirm.find_by(user_1_id: session[:current_user]["id"], user_2_id: @user.id)
+        if @valid.present?
+          flash[:error] = "You have already sent this request."
+        else
 
-             if(@u.present?)
-                 flash[:error] = "Da co trong danh sach ban be"
+        @u = Friend.find_by(user_1_id: session[:current_user]["id"], user_2_id: @user.id)
 
-             else
+          if(@u.present?)
 
-               relate = Confirm.create!(user_2_id: @user.id, user_1_id: session[:current_user_id])
-               flash[:success] = "Send request successfully."
-             end
+              flash[:error] = "User has already been added to friend list."
 
-           end
-         else
-           flash[:error] = "Khong co nguoi nay"
-         end
-       rescue ActiveRecord::RecordInvalid => e
-         flash[:error] = "Cannot register new account."
-
-       end
-   redirect_to request.referrer
-end
+          else
+            Confirm.create!(user_1_id: session[:current_user]["id"],user_2_id: @user.id)
+            flash[:success] = "Friend request sent."
+          end
+        end
+      end
+      else
+        flash[:error] = "User does not exist."
+      end
+    end
+redirect_to request.referrer
+  end
 
   private
   def user_params
