@@ -6,11 +6,11 @@ class SessionsController < ApplicationController
     user = User.find_by(session_params)
 
     if user.nil?
-      session[:error] = "Wrong email or password."
+    
       render :new
     else
       session[:current_user] = user
-      session[:success] = "Login successfully."
+
       redirect_to receive_path
     end
   end

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a href="/" class="navbar-brand">
-        <span class="glyphicon glyphicon-search"></span>
+    
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <i class="fa fa-home" aria-hidden="true"></i>
         </a>
@@ -11,8 +11,7 @@
 
       <div class="collapse navbar-collapse" id="collapsableContent">
         <ul class="navbar-nav">
-          <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-          <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="/mail/received" class="nav-link">Home</a></li>
 
           <% if session[:current_user] %>
           <li class="nav-item">
@@ -57,9 +56,9 @@
             <% @rmss.each do |rm| %>
             <% if !rm.seen %>
                 <tr onclick="location.href='<%= detailreceive_path(rm) %>'" id="read">
-                  <td><strong><%= rm.sender%></strong></td>
-                  <td id="<%=rm.id%>" class="body"><strong><%= rm.body %></strong></td>
-                  <td><strong><%= rm.created_at %></strong></td>
+                  <td><i><strong><%= rm.sender%></strong></i></td>
+                  <td id="<%=rm.id%>" class="body"><strong><i><%= rm.body %></i></strong></td>
+                  <td><i><strong><%= rm.created_at %></strong></i></td>
                 </tr>
             <% else %>
                 <tr>

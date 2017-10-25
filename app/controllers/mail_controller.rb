@@ -8,19 +8,19 @@ class MailController < ApplicationController
   def create
     begin
 			if(params[:chosen_id].to_s == "")
-				flash[:notice] = "Cannot send message!"
+
 			else
 
 				@sm = Message.create(body: params[:body])
 				Sendmail.create(user_id: session[:current_user]["id"] , message_id: @sm.id)
 				Receivemail.create(user_id: params[:chosen_id], message_id: @sm.id, seen: false)
-				flash[:notice] = "Message is sent!"
+
 				redirect_to sent_path
 			end
 
 
 		 rescue ActiveRecord::RecordInvalid => e
-			flash[:error] = "Cannot send message"
+		
 			redirect_to new_mail_path
     end
   end
