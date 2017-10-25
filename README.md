@@ -6,7 +6,7 @@ Thành viên:
 * [x] **1412033** Lê Hữu Bách (1412033)
 * [x] **1412118** Dương Thành Đạt (1412118)
 
-URL: **URL hosting của bài tập**
+URL: **https://mailec2017.herokuapp.com/**
 
 ## Yêu cầu
 
@@ -46,7 +46,7 @@ Liệt kê các **yêu cầu nâng cao** đã thực hiện:
 
 Link ảnh GIF demo ứng dụng:
 
-![Video Walkthrough](demo.gif)
+![Video Walkthrough](gifdemo/demo.gif)
 
 Tạo ảnh GIF với chương trình [LiceCap](http://www.cockos.com/licecap/).
 
